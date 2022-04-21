@@ -1,10 +1,17 @@
-import React from "react";
+import './App.css';
+import LeftSection from './components/LeftSection';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className="App">
-     <h1>Hello, World</h1>
-    </div>
+    <>
+      <Navbar />
+      <div id="circle"></div>
+      <div className="leftSection">
+        <LeftSection />
+      </div>
+      <div id="sally"></div>
+    </>
   );
 }
 
