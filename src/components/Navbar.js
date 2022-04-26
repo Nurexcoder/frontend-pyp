@@ -13,12 +13,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import styled from '@emotion/styled';
 
+import BasicModal from './SignUp/Signup';
+
 
 
 
 const pages = ['Home', 'Download', "Upload", 'About Us'];
 
 const Navbar = () => {
+    
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -40,6 +43,7 @@ const Navbar = () => {
         backgroundColor: 'white',
         color: 'black'
     })
+
     return (
         <AppBar position="static" sx={{ backgroundColor: "white" }}>
             <Container maxWidth="xl" >
@@ -145,7 +149,8 @@ const Navbar = () => {
                                 Login
                             </Button>
                             <Button sx={{ backgroundColor: 'white', color: 'grey' }} variant="outlined" size="medium">
-                                Sign up
+                                Signup
+                                <BasicModal />
                             </Button>
 
                         </div>

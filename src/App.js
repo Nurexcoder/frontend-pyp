@@ -1,16 +1,21 @@
 import './App.css';
-import LeftSection from './components/LeftSection';
-import Navbar from './components/Navbar';
+import BasicModal from './Components/SignUp/Signup';
+import LeftSection from './Components/LeftSection';
+import Navbar from './Components/Navbar';
+// import Form from './Components/SingIn/Form';
+import Form from './Components/Sign Up/SignUpForm';
 
 function App() {
   return (
     <>
-      <Navbar />
-      <div id="circle"></div>
+    {/* <BasicModal/> */}
+    <Form/>
+       {/* <Navbar /> */}
+      {/*<div id="circle"></div>
       <div className="leftSection">
         <LeftSection />
       </div>
-      <div id="sally"></div>
+      <div id="sally"></div> */}
     </>
   );
 }
