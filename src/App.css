@@ -22,3 +22,27 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
 }
+.downloadBox{
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 303px;
+  width: 241px;
+  background: rgba(255, 254, 254, 0.83);
+  border: 1px solid rgba(168,179,207,0.2);
+  box-sizing: border-box;
+  /* box-shadow: 5px 5px 10px 6px rgba(0, 0, 0, 0.36); */
+  /* border-color: rgba(168,179,207,0.2); */
+  border-radius: 1rem;
+  left: 141px;
+  top: 140px;
+  padding: 0.5rem;
+}
+.pdfView{
+  position:absolute;
+  width: 211px;
+  height: 173px;
+  background: #FFFFFF;
+  border-radius: 31px;
+}
