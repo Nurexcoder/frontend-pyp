@@ -1,8 +1,12 @@
 import React from 'react'
+import styled from 'styled-components'
 
+const DownloadBox=styled.div`
+    background-color: black;
+`
 const Download = () => {
   return (
-    <div className="downloadBox">
+    <DownloadBox >
         <div className="head"> header </div>
         <div className="pdfView">
         pdf
@@ -10,7 +14,7 @@ const Download = () => {
         <div className="foot">
         footer
         </div>
-    </div>
+    </DownloadBox>
   )
 }
 
