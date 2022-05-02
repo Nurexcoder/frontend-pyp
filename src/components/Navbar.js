@@ -13,7 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import styled from '@emotion/styled';
 
-import BasicModal from './SignUp/Signup';
+import SignUp from './SignUp/SignUp';
 
 
 
@@ -150,7 +150,7 @@ const Navbar = () => {
                             </Button>
                             <Button sx={{ backgroundColor: 'white', color: 'grey' }} variant="outlined" size="medium">
                                 Signup
-                                <BasicModal />
+                                {/* <SignUp /> */}
                             </Button>
 
                         </div>

@@ -18,7 +18,7 @@ const SubmitButton=styled(Button)`
 
 `
 
-export default function BasicModal() {
+export default function SignIn() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
