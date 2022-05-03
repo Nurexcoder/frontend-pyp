@@ -10,9 +10,9 @@ import {
   TextField,
   Autocomplete,
   Stack,
-  FormControl
+  FormControl,
 } from "@mui/material";
-// import makeStyles from '@mui/styles'
+// import { makeStyles } from '@mui/styles';
 import InputAdornment from "@mui/material/InputAdornment";
 import styled from "@emotion/styled";
 
@@ -79,10 +79,9 @@ const GridStyle = styled(Grid)`
 `;
 
 const TextFieldStyle = styled(TextField)`
-  &:focus {
-    border-radius: 15px;
-  }
+
 `;
+
 const branch = [
   {
     key: "cse",
@@ -112,20 +111,19 @@ const branch = [
 
 function SignUpForm() {
   // const classes = useStyles()
-  const [SignupData, setSignupData] = useState()
+  const [SignupData, setSignupData] = useState();
 
-  const handleSubmit=async(e)=>{
-      e.preventDefault();
-      console.log("Hi");
-      await baseApi.post(('/createuser'),{...SignupData})
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Hi");
+    await baseApi.post("/createuser", { ...SignupData });
+  };
 
-  }
-  const handleInput=(e)=>{
-
+  const handleInput = (e) => {
     // console.log(e.target.name,e.target.value)
-    setSignupData({...SignupData,[e.target.name]:e.target.value})
-  }
-  console.log(SignupData)
+    setSignupData({ ...SignupData, [e.target.name]: e.target.value });
+  };
+  console.log(SignupData);
 
   //For SubmitButton: Disable after one click
   const [disable, setDisable] = React.useState(false);
@@ -139,7 +137,6 @@ function SignUpForm() {
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
-
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -167,12 +164,10 @@ function SignUpForm() {
   const handleConfPasswordChange = (prop) => (event) => {
     setCvalues({ ...cvalues, [prop]: event.target.value });
   };
- 
 
   return (
-
-    <FormControl variant="form">
-      <Paper variant="form" style={paperStyle} elevation={10}>
+      <Paper style={paperStyle} elevation={10}>
+    <form variant="form">
         <GridStyle>
           <h2>Sign Up</h2>
 
@@ -181,7 +176,7 @@ function SignUpForm() {
             disableUnderline={true}
             name="username"
             id="outlined-adornment-password"
-            onChange={handlePasswordChange}
+            onChange={handleInput}
             startAdornment={
               <InputAdornment position="start">
                 <PersonOutlinedIcon sx={{ color: "black" }} />
@@ -222,7 +217,11 @@ function SignUpForm() {
             }}
             options={branch.map((option) => option.title)}
             renderInput={(params) => (
-              <TextFieldStyle {...params} placeholder="Branch" />
+              <TextFieldStyle className="textField-root"{...params} placeholder="Branch"    startadornment={
+                <InputAdornment position="start">
+                  <PersonOutlinedIcon sx={{ color: "black" }} />
+                </InputAdornment>
+              } />
             )}
           ></Autocomplete>
           {/* </Stack> */}
@@ -234,7 +233,6 @@ function SignUpForm() {
             // value={user.email}
             //onChange={handleInput}
             onChange={handleInput}
-            id="outlined-adornment-password"
             startAdornment={
               <InputAdornment position="start">
                 <EmailOutlinedIcon sx={{ color: "black" }} />
@@ -247,7 +245,7 @@ function SignUpForm() {
             name="password"
             sx={{ width: "265px", paddingRight: "3px" }}
             type={values.showPassword ? "text" : "password"}
-            onChange={handleInput}
+            onChange={handlePasswordChange("password")}
             value={values.password}
             // onChange={handleInput}
             disableUnderline={true}
@@ -275,7 +273,7 @@ function SignUpForm() {
             name="Cpassword"
             sx={{ width: "265px", paddingRight: "3px" }}
             type={cvalues.showConfPassword ? "text" : "password"}
-            onChange={handleInput}
+            onChange={handleConfPasswordChange("Cpassword")}
             value={cvalues.password}
             disableUnderline={true}
             startAdornment={
@@ -330,8 +328,8 @@ function SignUpForm() {
             </Link>
           </Typography>
         </GridStyle>
+    </form>
       </Paper>
-    </FormControl>
   );
 }
 

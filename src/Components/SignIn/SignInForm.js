@@ -168,7 +168,7 @@ function SignInForm() {
             name="password"
             sx={{ width: "265px", paddingRight: "3px" }}
             type={values.showPassword ? "text" : "password"}
-            onChange={handlePasswordChange}
+            onChange={handlePasswordChange("password")}
             value={values.password}
             disableUnderline={true}
             startAdornment={
