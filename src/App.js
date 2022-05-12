@@ -17,8 +17,8 @@ function App() {
         <LeftSection />
       </div>
       <div id="sally"></div> */}
-      <Download/>
-
+      {/* <Download/> */}
+      <Download_Page/>
     
       {/* <Home/> */}
       {/* <ApproveFile/> */}
