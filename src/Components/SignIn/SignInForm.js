@@ -6,7 +6,6 @@ import {
   Button,
   Typography,
   Link,
-  FormControl,
   Input,
   IconButton,
 } from "@mui/material";
@@ -19,11 +18,15 @@ import HttpsOutlinedIcon from "@mui/icons-material/HttpsOutlined";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import baseApi from "../../config";
+import Swal from "sweetalert2";
 
 const paperStyle = {
   height: "75vh",
   width: "344px",
-  margin: "20px auto",
+  // margin: "20px auto",
+  position: 'absolute',
+  top: '11%',
+  left: '39%',
   borderRadius: "30px",
 };
 const avatarStyle = {
@@ -62,7 +65,7 @@ const GridIcon = styled(Grid)`
 `;
 
 const InputStyle = styled(Input)`
-  font-weight: bold;
+  font-weight: 400;
   outline: none;
   padding: 0 20px;
   border: 2px solid #dddfe2;
@@ -80,16 +83,32 @@ const InputStyle = styled(Input)`
 const AvatarIcon = styled(AccountCircleRoundedIcon)`
   transform: scale(2.9);
 `;
-function SignInForm() {
-  const [loginData, setLoginData] = useState();
+
+function SignInForm(props) {
+  const [loginData, setLoginData] = useState({
+    password: "",
+    email: "",
+  });
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    console.log("kk");
-    const res = await baseApi.post("/login", { ...loginData });
+    e.preventDefault();
+    console.log("");
+    try {
+      const res = await baseApi.post("/auth/login", { ...loginData });
+      console.log(res.data);
+      localStorage.setItem("authToken", res.data.authToken);
+      localStorage.setItem("user", res.data.user);
+      props.handleClose();
+    } catch (error) {
+      Swal.fire("Error", "Incorrect password", "error");
+      props.handleClose();
+    }
   };
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     // console.log(e.target.name,e.target.value)
+    if (e.target.name === "password") {
+      handlePasswordChange("password");
+    }
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
   console.log(loginData);
@@ -128,7 +147,7 @@ function SignInForm() {
             disableUnderline={true}
             name="email"
             sx={{
-              fontWeight: "500",
+              fontWeight: "400",
               outline: "none",
               margin: "17px 0",
               padding: "0 20px ",
@@ -144,32 +163,13 @@ function SignInForm() {
             }
           />
 
-          {/* <Input
-            sx={{
-              fontWeight: "500",
-              outline: "none",
-              padding: "0 20px ",
-              border: "2px solid #dddfe2",
-              borderRadius: "25px",
-            }}
-            placeholder="password"
-            name="password"
-            onChange={handleChange}
-            disableUnderline={true}
-            startAdornment={
-              <InputAdornment position="start">
-                <HttpsOutlinedIcon sx={{ color: "black" }} />
-              </InputAdornment>
-            }
-          /> */}
-
           <InputStyle
             placeholder="Password"
             name="password"
             sx={{ width: "265px", paddingRight: "3px" }}
             type={values.showPassword ? "text" : "password"}
-            onChange={handlePasswordChange("password")}
-            value={values.password}
+            onChange={handleChange}
+            value={loginData.password}
             disableUnderline={true}
             startAdornment={
               <InputAdornment position="start">
@@ -230,7 +230,7 @@ function SignInForm() {
               display: "flex",
               justifyContent: "center",
               color: "#98979799",
-              margin: "6px"
+              margin: "6px",
             }}
           >
             or connect using

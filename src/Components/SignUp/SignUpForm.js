@@ -165,6 +165,21 @@ function SignUpForm() {
     setCvalues({ ...cvalues, [prop]: event.target.value });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   console.log("");
+  //   try {
+  //     const res = await baseApi.post("/auth/signup", { ...loginData });
+  //     console.log(res.data);
+  //     localStorage.setItem("authToken", res.data.authToken);
+  //     localStorage.setItem("user", res.data.user);
+  //     props.handleClose();
+  //   } catch (error) {
+  //     Swal.fire("Error", "Incorrect password", "error");
+  //     props.handleClose();
+  //   }
+  // };
+
   return (
       <Paper style={paperStyle} elevation={10}>
     <form variant="form">
