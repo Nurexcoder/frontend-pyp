@@ -92,7 +92,7 @@ function SignInForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("");
+    // console.log("");
     try {
       const res = await baseApi.post("/auth/login", { ...loginData });
       console.log(res.data);

@@ -17,14 +17,14 @@ function App() {
 
     {/* <BasicModal/> */}
     {/* <Form/> */}
-       <Navbar />
+       {/* <Navbar /> */}
       {/*<div id="circle"></div>
       <div className="leftSection">
         <LeftSection />
       </div>
       <div id="sally"></div> */}
 
-    {/* <UploadPage />  */}
+    <UploadPage /> 
     
       {/* <Home/> */}
       {/* <SignUpForm/> */}
