@@ -8,12 +8,11 @@ import {
   Link,
   Input,
   TextField,
-  Autocomplete,
-  Stack,
-  FormControl,
+  Autocomplete
 } from "@mui/material";
 // import { makeStyles } from '@mui/styles';
 import InputAdornment from "@mui/material/InputAdornment";
+// import InputUnstyled from "@mui/base/InputUnstyled";
 import styled from "@emotion/styled";
 
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -23,6 +22,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import baseApi from "../../config";
+import Swal from "sweetalert2";
 
 // const useStyles = makeStyles({
 //   textfield: {
@@ -39,7 +39,7 @@ const paperStyle = {
   paddingTop: "25px",
   height: "75vh",
   width: "356px",
-  margin: "20px auto",
+  margin: "95px auto",
   borderRadius: "30px",
 };
 
@@ -78,9 +78,12 @@ const GridStyle = styled(Grid)`
   align-items: center;
 `;
 
-const TextFieldStyle = styled(TextField)`
-
-`;
+const textStyle = {
+  width: "16rem",
+  borderRadius: "14px",
+  padding: "0px",
+  margin: "0px",
+};
 
 const branch = [
   {
@@ -109,51 +112,79 @@ const branch = [
   },
 ];
 
-function SignUpForm() {
+function SignUpForm(props) {
   // const classes = useStyles()
-  const [SignupData, setSignupData] = useState();
+  const [SignupData, setSignupData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: "",
+    branch: "",
+    regNo: ""
+  });
+
+  // const handleChange = (e) => {
+  //   // console.log(e.target.name,e.target.value)
+  //   setSignupData({ ...SignupData, [e.target.name]: e.target.value });
+  // };
+  // console.log(SignupData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Hi");
-    await baseApi.post("/createuser", { ...SignupData });
+    try {
+      const res = await baseApi.post("/auth/createuser", { ...SignupData });
+      console.log(res.data);
+      localStorage.setItem("authToken", res.data.authToken);
+      localStorage.setItem("user", res.data.user);
+      props.handleClose();
+    } catch (error) {
+      Swal.fire("Error", "Incorrect password", "error");
+      props.handleClose();
+    }
   };
 
-  const handleInput = (e) => {
-    // console.log(e.target.name,e.target.value)
+  const handleChange = (e) => {
+    if (e.target.name === "password") {
+      handlePasswordChange("password");
+    }
+    if (e.target.name === "Cpassword"){
+      handleConfPasswordChange("password")
+    }
     setSignupData({ ...SignupData, [e.target.name]: e.target.value });
   };
-  console.log(SignupData);
+
+  
 
   //For SubmitButton: Disable after one click
   const [disable, setDisable] = React.useState(false);
 
   //for password : Show
-  const [values, setValues] = React.useState({
+  const [password, setPassword] = React.useState({
     password: "",
     showPassword: false,
   });
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setPassword({ ...password, showPassword: !password.showPassword });
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const handleMouseDownPassword = (e) => {
+    e.preventDefault();
   };
 
   const handlePasswordChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    setPassword({ ...password, [prop]: event.target.value });
   };
 
   // for Confirm Password: Show
-  const [cvalues, setCvalues] = React.useState({
+  const [confpassword, setConfPassword] = React.useState({
     password: "",
     showConfPassword: false,
   });
 
   const handleClickShowConfPassword = () => {
-    setCvalues({ ...cvalues, showConfPassword: !cvalues.showConfPassword });
+    setConfPassword({ ...confpassword, showConfPassword: !confpassword.showConfPassword });
   };
   // console.log(setCvalues)
 
@@ -162,27 +193,12 @@ function SignUpForm() {
   };
 
   const handleConfPasswordChange = (prop) => (event) => {
-    setCvalues({ ...cvalues, [prop]: event.target.value });
+    setConfPassword({ ...confpassword, [prop]: event.target.value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log("");
-  //   try {
-  //     const res = await baseApi.post("/auth/signup", { ...loginData });
-  //     console.log(res.data);
-  //     localStorage.setItem("authToken", res.data.authToken);
-  //     localStorage.setItem("user", res.data.user);
-  //     props.handleClose();
-  //   } catch (error) {
-  //     Swal.fire("Error", "Incorrect password", "error");
-  //     props.handleClose();
-  //   }
-  // };
-
   return (
+    <form onSubmit={handleSubmit} variant="form">
       <Paper style={paperStyle} elevation={10}>
-    <form variant="form">
         <GridStyle>
           <h2>Sign Up</h2>
 
@@ -190,8 +206,8 @@ function SignUpForm() {
             placeholder="User name"
             disableUnderline={true}
             name="username"
-            id="outlined-adornment-password"
-            onChange={handleInput}
+            // id="outlined-adornment-password"
+            onChange={handleChange}
             startAdornment={
               <InputAdornment position="start">
                 <PersonOutlinedIcon sx={{ color: "black" }} />
@@ -203,51 +219,43 @@ function SignUpForm() {
             placeholder="Registration no."
             disableUnderline={true}
             name="registration_no"
-            id="outlined-adornment-password"
-            onChange={handleInput}
+            // id="outlined-adornment-password"
+            onChange={handleChange}
             startAdornment={
               <InputAdornment position="start">
                 <PersonOutlinedIcon sx={{ color: "black" }} />
               </InputAdornment>
             }
           />
-
-          {/* <InputStyle
-            placeholder="Branch"
-            disableUnderline={true}
-            name="branch"
-            id="outlined-adornment-password"
-            startAdornment={
-              <InputAdornment position="start">
-                <PersonOutlinedIcon sx={{ color: "black" }} />
-              </InputAdornment>
-            }
-          /> */}
-
-          {/* <Stack spacing={2} sx={{ width: 300, padding: "0" }}> */}
           <Autocomplete
             freeSolo
             sx={{
-              padding: "0",
+              padding: "0px",
             }}
             options={branch.map((option) => option.title)}
             renderInput={(params) => (
-              <TextFieldStyle className="textField-root"{...params} placeholder="Branch"    startadornment={
-                <InputAdornment position="start">
-                  <PersonOutlinedIcon sx={{ color: "black" }} />
-                </InputAdornment>
-              } />
+              <TextField
+                sx={textStyle}
+                className="textField-root"
+                {...params}
+                placeholder="Branch"
+                size="small"
+                // InputProps={{
+                //   startAdornment: (
+                //     <InputAdornment position="start">
+                //       <PersonOutlinedIcon sx={{ color: "black" }} />
+                //     </InputAdornment>
+                //   ),
+                // }}
+              />
             )}
           ></Autocomplete>
-          {/* </Stack> */}
 
           <InputStyle
             placeholder="Email"
             disableUnderline={true}
             name="email"
-            // value={user.email}
-            //onChange={handleInput}
-            onChange={handleInput}
+            onChange={handleChange}
             startAdornment={
               <InputAdornment position="start">
                 <EmailOutlinedIcon sx={{ color: "black" }} />
@@ -259,10 +267,10 @@ function SignUpForm() {
             placeholder="Password"
             name="password"
             sx={{ width: "265px", paddingRight: "3px" }}
-            type={values.showPassword ? "text" : "password"}
-            onChange={handlePasswordChange("password")}
-            value={values.password}
-            // onChange={handleInput}
+            type={password.showPassword ? "text" : "password"}
+            // onChange={handlePasswordChange("password")}
+            onChange={handleChange}
+            value={SignupData.password}
             disableUnderline={true}
             startAdornment={
               <InputAdornment position="start">
@@ -277,7 +285,7 @@ function SignUpForm() {
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
                 >
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                  {password.showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
             }
@@ -287,9 +295,9 @@ function SignUpForm() {
             placeholder="Confirm Password"
             name="Cpassword"
             sx={{ width: "265px", paddingRight: "3px" }}
-            type={cvalues.showConfPassword ? "text" : "password"}
-            onChange={handleConfPasswordChange("Cpassword")}
-            value={cvalues.password}
+            type={confpassword.showConfPassword ? "text" : "password"}
+            onChange={handleChange}
+            value={SignupData.cpassword}
             disableUnderline={true}
             startAdornment={
               <InputAdornment position="start">
@@ -304,7 +312,7 @@ function SignUpForm() {
                   onMouseDown={handleMouseDownConfPassword}
                   edge="end"
                 >
-                  {cvalues.showConfPassword ? (
+                  {confpassword.showConfPassword ? (
                     <VisibilityOff />
                   ) : (
                     <Visibility />
@@ -315,13 +323,11 @@ function SignUpForm() {
           />
 
           <StyledButton
-            // disabled={disable}
-            // onClick={() => setDisable(true)}
             type="submit"
             color="primary"
             variant="contained"
-            // onClick={handleSubmit}
-            onSubmit={handleSubmit}
+            // onClick={handleSubmit ? setDisable(true) : setDisable(false)}
+            onClick={handleSubmit}
             sx={{
               "&.MuiButtonBase-root:hover": {
                 bgcolor: "#5987FF",
@@ -343,8 +349,8 @@ function SignUpForm() {
             </Link>
           </Typography>
         </GridStyle>
-    </form>
       </Paper>
+    </form>
   );
 }
 
