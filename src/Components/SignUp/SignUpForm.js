@@ -8,7 +8,8 @@ import {
   Link,
   Input,
   TextField,
-  Autocomplete
+  Autocomplete,
+  Stack,
 } from "@mui/material";
 // import { makeStyles } from '@mui/styles';
 import InputAdornment from "@mui/material/InputAdornment";
@@ -44,7 +45,7 @@ const paperStyle = {
 };
 
 const InputStyle = styled(Input)`
-  font-weight: bold;
+  /* font-weight: bold; */
   outline: none;
   padding: 0 20px;
   border: 2px solid #dddfe2;
@@ -78,39 +79,55 @@ const GridStyle = styled(Grid)`
   align-items: center;
 `;
 
-const textStyle = {
-  width: "16rem",
-  borderRadius: "14px",
-  padding: "0px",
-  margin: "0px",
-};
+// const textStyle = {
+//   width: "16rem",
+//   borderRadius: "14px",
+//   padding: "0px",
+//   margin: "0px",
+// };
 
 const branch = [
   {
     key: "cse",
-    title: "CSE",
+    title: "Department of Computer Science And Engneering",
   },
   {
     key: "agri",
-    title: "AGRI",
+    title: "Department of Agricultural Engineering",
   },
   {
     key: "ece",
-    title: "ECE",
+    title: "Department of Electronics and Communication Engineering",
   },
   {
     key: "ee",
-    title: "EE",
+    title: "Department of Electrical Engineering",
   },
   {
     key: "forest",
-    title: "FORESTRY",
+    title: "Department of Forestry",
   },
   {
     key: "civil",
-    title: "CIVIL",
+    title: "Department of Civil Engineering",
+  },
+  {
+    key: "mechanical",
+    title: "Department of Mechanical Engineering",
   },
 ];
+
+const autoStyle = {
+  "& .MuiOutlinedInput-notchedOutline":{
+    border: '2px solid #dddfe2',
+    borderRadius: '27px',
+    width: '15rem',
+    marginLeft: '-6px'
+  },
+  "& .MuiOutlinedInput-root.MuiInputBase-sizeSmall": {
+    padding: '4px !important'
+  }
+}
 
 function SignUpForm(props) {
   // const classes = useStyles()
@@ -118,9 +135,8 @@ function SignUpForm(props) {
     name: "",
     email: "",
     password: "",
-    cpassword: "",
     branch: "",
-    regNo: ""
+    regNo: "",
   });
 
   // const handleChange = (e) => {
@@ -130,31 +146,24 @@ function SignUpForm(props) {
   // console.log(SignupData);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Hi");
-    try {
+      e.preventDefault();
+      // console.log("Hi");
       const res = await baseApi.post("/auth/createuser", { ...SignupData });
       console.log(res.data);
       localStorage.setItem("authToken", res.data.authToken);
       localStorage.setItem("user", res.data.user);
       props.handleClose();
-    } catch (error) {
-      Swal.fire("Error", "Incorrect password", "error");
-      props.handleClose();
-    }
-  };
+  }
 
   const handleChange = (e) => {
     if (e.target.name === "password") {
       handlePasswordChange("password");
     }
-    if (e.target.name === "Cpassword"){
-      handleConfPasswordChange("password")
+    if (e.target.name === "Cpassword") {
+      handleConfPasswordChange("password");
     }
     setSignupData({ ...SignupData, [e.target.name]: e.target.value });
   };
-
-  
 
   //For SubmitButton: Disable after one click
   const [disable, setDisable] = React.useState(false);
@@ -184,7 +193,10 @@ function SignUpForm(props) {
   });
 
   const handleClickShowConfPassword = () => {
-    setConfPassword({ ...confpassword, showConfPassword: !confpassword.showConfPassword });
+    setConfPassword({
+      ...confpassword,
+      showConfPassword: !confpassword.showConfPassword,
+    });
   };
   // console.log(setCvalues)
 
@@ -227,29 +239,28 @@ function SignUpForm(props) {
               </InputAdornment>
             }
           />
-          <Autocomplete
-            freeSolo
-            sx={{
-              padding: "0px",
-            }}
-            options={branch.map((option) => option.title)}
-            renderInput={(params) => (
-              <TextField
-                sx={textStyle}
-                className="textField-root"
+          <Stack spacing={2} width="250px">
+            <Autocomplete
+            sx={autoStyle}
+              disablePortal
+              options={branch.map((option) => option.title)}
+              renderInput={(params) => (
+                <TextField
                 {...params}
-                placeholder="Branch"
-                size="small"
-                // InputProps={{
-                //   startAdornment: (
-                //     <InputAdornment position="start">
-                //       <PersonOutlinedIcon sx={{ color: "black" }} />
-                //     </InputAdornment>
-                //   ),
-                // }}
-              />
-            )}
-          ></Autocomplete>
+                InputProps={{
+                  ...params.InputProps,
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonOutlinedIcon sx={{ color: "black" }} />
+                    </InputAdornment>
+                  ),
+                }}
+                  placeholder="Branch"
+                  size="small"
+                ></TextField>
+              )}
+            ></Autocomplete>
+          </Stack>
 
           <InputStyle
             placeholder="Email"
