@@ -2,9 +2,9 @@ import { useState } from "react";
 // import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 import DataTable from "react-data-table-component";
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Backdrop } from "@mui/material";
 import axios from "axios";
-import baseApi, { localUrl, prodUrl } from "../config";
+import baseApi, { localUrl, prodUrl } from "../../config";
 import { useEffect } from "react";
 
 import ArticleIcon from "@mui/icons-material/Article";
@@ -12,6 +12,7 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PreviewIcon from "@mui/icons-material/Preview";
 import Swal from "sweetalert2";
+import Loader from "../Loader";
 // import { useDemoData } from '@mui/x-data-grid-generator';
 
 const VISIBLE_FIELDS = [
@@ -81,6 +82,13 @@ const VISIBLE_FIELDS = [
 export default function ApproveFile() {
     const [data, setData] = useState();
     const [isChanged, setIsChanged] = useState(false);
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleToggle = () => {
+        setOpen(!open);
+    };
     const handleApprove = async (id, isApproved) => {
         const headers = {
             Authorization: "Bearer my-token",
@@ -90,7 +98,7 @@ export default function ApproveFile() {
             id: id,
             isApproved,
         };
-
+        handleToggle();
         try {
             const res = await fetch(`${prodUrl}/admin/file`, {
                 method: "PUT",
@@ -102,6 +110,7 @@ export default function ApproveFile() {
                 body: JSON.stringify(data),
             });
             console.log(res);
+            handleClose();
             if (res.status === 200) {
                 Swal.fire(
                     `${isApproved ? "Approved" : "Rejected"}`,
@@ -111,6 +120,7 @@ export default function ApproveFile() {
             }
             setIsChanged(!isChanged);
         } catch (error) {
+            handleClose();
             console.log(error);
             Swal.fire("Unsuccessfull", "Something went wrong", "error");
         }
@@ -120,12 +130,14 @@ export default function ApproveFile() {
             name: "User",
             selector: (row) => row.createdBy,
             sortable: true,
+            width: 1000,
         },
         {
             name: "Branch",
             selector: (row) => row.branch,
             sortable: true,
-            wrap:true
+            wrap: true,
+            maxWidth: 1,
         },
         {
             name: "Year and Branch",
@@ -144,15 +156,16 @@ export default function ApproveFile() {
             cell: (row: { _id: any }) => (
                 <>
                     <a target='_blank' href={row.file}>
-                        <Button variant='contained'>
+                        <Button style={{ margin: "0 2px" }} variant='contained'>
                             <PreviewIcon />
                         </Button>
                     </a>
                     <Button
                         color='success'
                         variant='contained'
+                        style={{ margin: "0 2px" }}
                         onClick={() => handleApprove(row._id, true)}
-                        className='btn btn-primary'
+                        className='btn-action-files'
                         disabled={row.approved}>
                         <CheckCircleOutlineIcon />
                     </Button>
@@ -160,8 +173,9 @@ export default function ApproveFile() {
                     <Button
                         color='error'
                         variant='contained'
+                        style={{ margin: "0 2px" }}
                         onClick={() => handleApprove(row._id, false)}
-                        className='btn btn-danger'
+                        className='btn-action-files'
                         disabled={row.approved === false}>
                         <CancelIcon />
                     </Button>
@@ -192,7 +206,7 @@ export default function ApproveFile() {
                     createdBy: file.createdBy,
                     branch: file.branch,
                     semester: file.semester,
-                    year: 'Year:'+file.year+', Semester:'+file.semester,
+                    year: "Year:" + file.year + ", Semester:" + file.semester,
                     approved: file.approved,
                     file: file.file,
                     isApproved: (
@@ -224,9 +238,20 @@ export default function ApproveFile() {
     return (
         <div style={{ height: "100vh", width: "100%" }}>
             {data ? (
-                <DataTable data={data} columns={columns} />
+                <>
+                    <DataTable title='Files' data={data} columns={columns} />
+                    <Backdrop
+                        sx={{
+                            color: "#fff",
+                            zIndex: (theme) => theme.zIndex.drawer + 1,
+                        }}
+                        open={open}
+                        onClick={handleClose}>
+                        <CircularProgress color='inherit' />
+                    </Backdrop>
+                </>
             ) : (
-                <CircularProgress />
+                <Loader/>
             )}
         </div>
     );
