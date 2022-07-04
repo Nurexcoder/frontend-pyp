@@ -5,12 +5,13 @@ import Navbar from './components/Navbar';
 import Download_Page from './components/Download_Page';
 import Download from './components/Download';
 import Home from './pages/Home';
+import Footer from './components/Footer';
 
 
 function App() {
   return (
     <>
-
+      <Footer/>
       {/* <Navbar />
       <div id="circle"></div>
       <div className="leftSection">
@@ -18,7 +19,7 @@ function App() {
       </div>
       <div id="sally"></div> */}
       {/* <Download/> */}
-      <Download_Page/>
+      {/* <Download_Page/> */}
     
       {/* <Home/> */}
       {/* <ApproveFile/> */}

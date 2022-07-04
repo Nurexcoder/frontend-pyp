@@ -7,22 +7,33 @@ import Navbar from "./Navbar";
 
 const Filtter = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-direction: row;
-  width: 60%;
+  width: 50%;
   align-items: center;
-  margin: atuo;
+  margin: 10px;
 `;
 const Dbox = styled.div`
   display: flex;
+  /* gap: 10px 10px; */
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: auto;
-  width: 90%;
-  align-items: center;
+  margin: 0px 65px;
+ // width: 90%;
+  //align-items: center;
 `;
 const Bttn = styled.button`
   border-radius: 19px;
+`;
+const Fbox = styled.div`
+  width: 144px;
+  height: 36px;
+  background-color: white;
+  border-radius: 14px;
+  align-items: center;
+  justify-content: center;
+  //margin: auto;
+
 `;
 
 const Download_Page = () => {
@@ -41,12 +52,11 @@ const Download_Page = () => {
     <>
       <Navbar/>
       <Filtter>
-        <ui>
-          <li>Branch</li>
-          <li>Year</li>
-          <li>Branch</li>
-          <li>Branch</li>
-        </ui>
+        <span>sort by:</span>
+        <Fbox>Branch</Fbox>
+        <Fbox>Branch</Fbox>
+        <Fbox>Branch</Fbox>
+        <Fbox>Branch</Fbox>
       </Filtter>
       <Dbox>
       {cardData ? (

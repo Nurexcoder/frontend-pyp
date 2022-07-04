@@ -11,17 +11,16 @@ const DownloadBox = styled.div`
   position: relative;
   justify-content: space-between;
   align-items: center;
-  height: 460px;
-  width: 420px;
-  //background: rgba(255, 254, 254, 0.83);
-  //border: 1px solid rgba(168, 179, 207, 0.2);
+  height: 342px;
+  width: 313px;
   box-sizing: border-box;
-  background: #F7F5F5;
+  background: #F6F5F5;
   border: 1px solid #868686;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.36);
   border-radius: 1rem;
   padding: 1rem;
   margin: 16px;
+  //gap: 2rem;
 `;
 const Head = styled.div`
   display: flex;
@@ -32,8 +31,8 @@ const Head = styled.div`
   box-sizing: border-box;
 `;
 const PdfView = styled.img`
-  width: 302px;
-  height: 160px;
+  width: 290px;
+  height: 182px;
   background: #ffffff;
   border-radius: 31px;
   cursor:pointer;
@@ -63,7 +62,7 @@ const UBy = styled.div`
     <DownloadBox>
       <Head>
         <Tittle>
-          <h1>SUBJECT NAMEkdsfjoiaewjnfjnew</h1>
+          <h2>SUBJECT NAMEkdsfjoiaewjnfjnew</h2>
         <UBy>Uploaded by</UBy>
         </Tittle>
         <More/>
