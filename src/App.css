@@ -1,7 +1,15 @@
 body {
+<<<<<<< HEAD
   /* background-color: #7689ff; */
   height: 100vh;
   width: 100%;
+=======
+
+  background-color: #E8EAFE;
+  font-family: Roboto;
+  color: #121212;
+
+>>>>>>> 55f4f9ae3c9ef9dce40b41bcb251861d07512b76
 }
 #circle {
   position: absolute;
@@ -29,7 +37,11 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
 }
+<<<<<<< HEAD
 .sally{
   width: 40%;
   height: auto;
 }
+=======
+
+>>>>>>> 55f4f9ae3c9ef9dce40b41bcb251861d07512b76

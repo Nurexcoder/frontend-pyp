@@ -176,7 +176,7 @@ const Navbar = () => {
                     </Box> */}
                     <Box sx={{ "& button": { m: 1 } }}>
                         {user ? (
-                            <Avatar>{user.name?user.username[0]:'H'}</Avatar>
+                            <Avatar>{user.name?user.name[0]:'H'}</Avatar>
                         ) : (
                             <div>
                                 <Button
