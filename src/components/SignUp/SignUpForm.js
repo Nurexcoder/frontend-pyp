@@ -214,10 +214,12 @@ function SignUpForm(props) {
         <GridStyle>
           <h2>Sign Up</h2>
 
+          
+
           <InputStyle
-            placeholder="User name"
+            placeholder="Name"
             disableUnderline={true}
-            name="username"
+            name="name"
             // id="outlined-adornment-password"
             onChange={handleChange}
             startAdornment={
@@ -230,7 +232,7 @@ function SignUpForm(props) {
           <InputStyle
             placeholder="Registration no."
             disableUnderline={true}
-            name="registration_no"
+            name="regNumber"
             // id="outlined-adornment-password"
             onChange={handleChange}
             startAdornment={

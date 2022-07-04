@@ -1,5 +1,7 @@
 body {
   /* background-color: #7689ff; */
+  height: 100vh;
+  width: 100%;
 }
 #circle {
   position: absolute;
@@ -11,14 +13,23 @@ body {
   right: 0px;
   z-index: -1;
 }
+.leftSection{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 #sally {
   position: absolute;
-  width: 640px;
-  height: 620px;
+  width: 340px;
+  height: auto;
   left: 959px;
   top: 115px;
-  background-image: url(/Saly-10.png);
+  /* background-image: url(/Saly-10.png); */
   background-size: contain;
   background-repeat: no-repeat;
+}
+.sally{
+  width: 40%;
+  height: auto;
 }
