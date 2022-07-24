@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Download from "./Download";
 import styled from "styled-components";
 import Navbar from "./Navbar";
+import { localUrl } from "../config";
 
 const Filtter = styled.div`
   display: flex;
@@ -36,10 +37,10 @@ const Fbox = styled.div`
 
 `;
 
-const Download_Page = () => {
+const DownloadPage = () => {
   const [cardData, setCardData] = useState();
   useEffect(() => {
-    axios.get("https://pypbackendserver.herokuapp.com/upload/file").then((response) => {
+    axios.get(`${localUrl}/files`).then((response) => {
         console.log(response);
         return response.data;
       }).then((res) => {
@@ -69,4 +70,4 @@ const Download_Page = () => {
   );
 };
 
-export default Download_Page;
+export default DownloadPage;

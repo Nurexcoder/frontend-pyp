@@ -4,6 +4,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ShareIcon from "@mui/icons-material/Share";
 import DownloadForOfflineOutlinedIcon from "@mui/icons-material/DownloadForOfflineOutlined";
+import { user } from "../config";
 
 const DownloadBox = styled.div`
   display: flex;
@@ -62,8 +63,8 @@ const UBy = styled.div`
     <DownloadBox>
       <Head>
         <Tittle>
-          <h2>SUBJECT NAMEkdsfjoiaewjnfjnew</h2>
-        <UBy>Uploaded by</UBy>
+          <h2>SUBJECT NAME:{"  "}{data.subject}</h2>
+        <UBy>Uploaded by:{"  "}{data.createdBy}</UBy>
         </Tittle>
         <More/>
       </Head>
@@ -72,7 +73,7 @@ const UBy = styled.div`
         <a href={data.file} target="_blank">
         <DownloadIcon />
         </a>
-        <DeleteIcon />
+        {data.createdBy===user._id?<DeleteIcon />:<></>} 
         <ShareIcon />
       </Foot>
     </DownloadBox>
